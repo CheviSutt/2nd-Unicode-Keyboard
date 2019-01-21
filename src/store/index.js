@@ -8,7 +8,7 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     characters: [],
-    language: 'latin',
+    languages: {},
   },
 
   mutations: {
@@ -30,7 +30,7 @@ export default new Vuex.Store({
       this.state.characters = rows;
     },
     updateLanguage(state, language) {
-      this.state.language = language;
+      this.state.languages = language;
     },
   },
   getters: {
@@ -42,7 +42,8 @@ export default new Vuex.Store({
     getUnicode({ commit, state }) {
       // axios.get('http://localhost:3333/lookup?q=latin&o=0')
       // axios.get('http://localhost:3333/lookup?q=' + state.language + '')
-      axios.get(`http://localhost:3333/lookup?q=${state.language}`)
+      // axios.get(`http://localhost:3333/lookup?q=${state.language}`)
+      axios.get('http://10.6.15.202:3333/unicode-categories')
         .then(result => commit('updateKeys', result.data))
         .catch(console.error);
     },

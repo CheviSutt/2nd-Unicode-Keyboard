@@ -55,7 +55,7 @@ export default new Vuex.Store({
       // axios.get(`http://localhost:3333/lookup?q=${state.language}`)
       axios.get('http://10.5.9.5:3333/unicode-categories')
         .then(result => commit('updateCategories', result.data))
-        .catch(console.error);
+        .catch(console.error); // used to be updateKeys
     },
     // getCategory({ commit, state }) {
     //   axios.get(`http://10.5.9.5:3333/unicode?category=${state.categories}`)

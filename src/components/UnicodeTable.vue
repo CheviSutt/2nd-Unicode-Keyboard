@@ -85,7 +85,7 @@ export default {
   methods: {
     ...mapActions([
       'getCategories',
-      'getCategory',
+      // 'getCategory',
       'setLanguage',
     ]),
 
@@ -117,7 +117,7 @@ export default {
 
   created() {
     this.getCategories();
-    this.getCategory();
+    // this.getCategory();
     this.symbols = JSON.parse(localStorage.getItem('characterSelected')) || []; // clears length of null error when storage is clear
   },
 

@@ -8,21 +8,23 @@ Vue.use(Vuex);
 export default new Vuex.Store({
   state: {
     categories: null,
+    category: null,
     characters: null,
+    // character: null, // not used
     languages: {},
   },
 
   mutations: {
     updateCategories(state, categories) {
-      this.state.categories = categories;
-      console.log(this.state.categories);
+      state.categories = categories;
+      state.category = 'Cc';
+      // console.log(this.state.categories);
     },
     updateKeys(state, characters) {
-      // const { results } = characters;// get results into a variable somehow
-      this.state.characters = characters;
-      // console.log(this.state.characters);
+      state.characters = characters;
+      console.log('updateKeys():', characters);
       const rows = [];
-      for (let i = 0; i < characters.length + 16; i += 16) {
+      for (let i = 0; i < characters + 16; i += 16) { // results.length instead of characters
         const row = [];
         for (let j = i; j < i + 16; j += 1) {
           const td = characters[j];
@@ -34,10 +36,10 @@ export default new Vuex.Store({
         rows.push(row);
       }
       // console.log(rows);
-      //  this.state.characters = rows; If this is uncommented it will break
+      // this.characters = rows; // If this is uncommented it will break
     },
     updateLanguage(state, language) {
-      this.state.languages = language;
+      this.state.category = language;
     },
   },
   getters: {
@@ -49,23 +51,19 @@ export default new Vuex.Store({
     },
   },
   actions: {
-    getCategories({ commit, state }) {
-      // axios.get('http://localhost:3333/lookup?q=latin&o=0')
-      // axios.get('http://localhost:3333/lookup?q=' + state.language + '')
-      // axios.get(`http://localhost:3333/lookup?q=${state.language}`)
-      axios.get('http://10.5.9.5:3333/unicode-categories')
+    getCategories({ commit }) {
+      return axios.get('http://10.6.9.21:3333/unicode-categories')
         .then(result => commit('updateCategories', result.data))
-        .catch(console.error); // used to be updateKeys
+        .catch(console.error);
     },
-    // getCategory({ commit, state }) {
-    //   axios.get(`http://10.5.9.5:3333/unicode?category=${state.categories}`)
-    //     .then(response => commit('updateCategory', response.data))
-    //     .catch(console.error);
-    // },
+    getCategory({ commit, state }) {
+      return axios.get(`http://10.6.9.21:3333/unicode?category=${state.category}`)
+        .then(response => commit('updateKeys', response.data))
+        .catch(console.error);
+    },
     setLanguage({ dispatch, commit }, selectedLanguage) {
       commit('updateLanguage', selectedLanguage);
-      dispatch('getCategories');
-      console.log('setLanguage():', selectedLanguage);
+      return dispatch('getCategory');
     },
   },
 

@@ -2,57 +2,29 @@
   <div class="container">
 
     <h1>{{ title }}</h1>
-    <h2>{{ categories }}</h2>
+    <!--<h4>{{ characters }}</h4>-->
 
     <div class="keyboard">
       <select @change="setLanguage(currLanguage)" v-model="currLanguage">
-        <option value="" selected>Select Language</option>
-        <option value="Other, Control">Other, Control</option>
-        <option value="Other, Format">Other, Format</option>
-        <option value="Other, Private Use">Other, Private Use</option>
-        <option value="Other, Surrogate">Other, Surrogate</option>
-        <option value="Letter, Lowercase">Letter, Lowercase</option>
-        <option value="Letter, Modifier">Letter, Modifier</option>
-        <option value="Letter, Other">Letter, Other</option>
-        <option value="Letter, Titlecase">Letter, Titlecase</option>
-        <option value="Letter, Uppercase">Letter, Uppercase</option>
-        <option value="Mark, Spacing Combining">Mark, Spacing Combining</option>
-        <option value="Mark, Enclosing">Mark, Enclosing</option>
-        <option value="Mark, Nonspacing">Mark, Nonspacing</option>
-        <option value="Number, Decimal Digit">Number, Decimal Digit</option>
-        <option value="Number, Letter">Number, Letter</option>
-        <option value="Number, Other">Number, Other</option>
-        <option value="Punctuation, Connector">Punctuation, Connector</option>
-        <option value="Punctuation, Dash">Punctuation, Dash</option>
-        <option value="Punctuation, Close">Punctuation, Close</option>
-        <option value="Punctuation, Final quote">Punctuation, Final quote</option>
-        <option value="Punctuation, Initial quote">Punctuation, Initial quote</option>
-        <option value="Punctuation, Other">Punctuation, Other</option>
-        <option value="Punctuation, Open">Punctuation, Open</option>
-        <option value="Symbol, Currency">Symbol, Currency</option>
-        <option value="Symbol, Modifier">Symbol, Modifier</option>
-        <option value="Symbol, Math">Symbol, Math</option>
-        <option value="Symbol, Other">Symbol, Other</option>
-        <option value="Separator, Line">Separator, Line</option>
-        <option value="Separator, Paragraph">Separator, Paragraph</option>
-        <option value="Separator, Space">Separator, Space</option>
+        <option v-for="(value, key) of categories" :value="key" :key="key">{{ value }}</option>
       </select>
         <div class="keyTable">
-          <table>
-            <tr v-for="(row, index) of characters" :key="index">
-              <td v-bind:class="{ active: activeKey(key) }" v-for="key of row" :title="key[5]"
-                  :key="key[3]" @click="recentSymbols(key)">
-                <div class="keyButton">{{ key[4] }}</div></td>
-            </tr>
-          </table>
+          <!--<table>-->
+            <!--<tr v-for="(row, index) of characters" v-bind:key="index">-->
+              <!--<td v-bind:class="{ active: activeKey(key) }" v-for="key of row" :title="key[5]"-->
+                  <!--:key="key[3]" @click="recentSymbols(key)">-->
+                <!--<div class="keyButton">{{ row.name }}</div></td>-->
+            <!--</tr>-->
+          <!--</table>-->
       </div>
+      <h3 v-for="(row, index) of characters" v-bind:key="index" :title="row.name">{{ row.symbol }}</h3>
       <h4>Recently used symbols:</h4>
       <div class="recentRow">
         <table>
-          <tr>
-            <td v-for="symbol of symbols" :key="symbol[0]" :title="symbol[5]">
-              <div class="keyButton">{{ symbol[4] }}</div></td>
-          </tr>
+          <!--<tr>-->
+            <!--<td v-for="symbol of symbols" :key="symbol[0]" :title="symbol[5]">-->
+              <!--<div class="keyButton">{{ symbol[4] }}</div></td>-->
+          <!--</tr>-->
         </table>
       </div>
       <div class="buttons">
@@ -81,11 +53,16 @@ export default {
       characters: 'characters',
       categories: 'categories',
     }),
+    // characters() {
+    //   return this.$store.state.characters || {
+    //     mirrored: [],
+    //   };
+    // },
   },
   methods: {
     ...mapActions([
       'getCategories',
-      // 'getCategory',
+      'getCategory',
       'setLanguage',
     ]),
 
@@ -116,8 +93,7 @@ export default {
   },
 
   created() {
-    this.getCategories();
-    // this.getCategory();
+    this.getCategories().then(() => this.getCategory());
     this.symbols = JSON.parse(localStorage.getItem('characterSelected')) || []; // clears length of null error when storage is clear
   },
 

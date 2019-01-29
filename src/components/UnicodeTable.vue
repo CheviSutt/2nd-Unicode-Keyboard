@@ -9,22 +9,21 @@
         <option v-for="(value, key) of categories" :value="key" :key="key">{{ value }}</option>
       </select>
         <div class="keyTable">
-          <!--<table>-->
-            <!--<tr v-for="(row, index) of characters" v-bind:key="index">-->
-              <!--<td v-bind:class="{ active: activeKey(key) }" v-for="key of row" :title="key[5]"-->
-                  <!--:key="key[3]" @click="recentSymbols(key)">-->
-                <!--<div class="keyButton">{{ row.name }}</div></td>-->
-            <!--</tr>-->
-          <!--</table>-->
+          <table>
+            <tr v-for="(row, index) of characters" v-bind:key="index">
+              <td v-bind:class="{ active: activeKey(key) }" v-for="key of row" :title="key.name"
+                  :key="key.value" @click="recentSymbols(key)">
+                <div class="keyButton">{{ key.symbol }}</div></td>
+            </tr>
+          </table>
       </div>
-      <h3 v-for="(row, index) of characters" v-bind:key="index" :title="row.name">{{ row.symbol }}</h3>
       <h4>Recently used symbols:</h4>
       <div class="recentRow">
         <table>
-          <!--<tr>-->
-            <!--<td v-for="symbol of symbols" :key="symbol[0]" :title="symbol[5]">-->
-              <!--<div class="keyButton">{{ symbol[4] }}</div></td>-->
-          <!--</tr>-->
+          <tr>
+            <td v-for="symbol of symbols" :key="symbol[0]" :title="symbol.name">
+              <div class="keyButton">{{ symbol.symbol }}</div></td>
+          </tr>
         </table>
       </div>
       <div class="buttons">
@@ -77,7 +76,7 @@ export default {
       if (!prevSelected) {
         this.symbols.unshift(key);
         localStorage.setItem('characterSelected', JSON.stringify(this.symbols));
-        this.symbols = this.symbols.slice(0, 15);
+        this.symbols = this.symbols.slice(0, 16);
         console.log(this.symbols[0]);
       }
       this.$emit('keySelected', key);

@@ -21,22 +21,23 @@ export default new Vuex.Store({
       // console.log(this.state.categories);
     },
     updateKeys(state, characters) {
-      state.characters = characters;
-      console.log('updateKeys():', characters);
+      // console.log('updateKeys():', characters);
       const rows = [];
-      for (let i = 0; i < characters + 16; i += 16) { // results.length instead of characters
-        const row = [];
-        for (let j = i; j < i + 16; j += 1) {
-          const td = characters[j];
-          if (!td) {
-            break;
-          }
-          td && row.push(td);
+      let row = [];
+      for (const key in characters) {
+        const character = characters[key];
+        row.push(character);
+        if (row.length > 16) {
+          rows.push(row);
+          row = [];
         }
+        // console.log('Rows', rows);
+      }
+      if (row.length && !rows.length) {
         rows.push(row);
       }
-      // console.log(rows);
-      // this.characters = rows; // If this is uncommented it will break
+      // console.log('Row', row);
+      state.characters = rows;
     },
     updateLanguage(state, language) {
       this.state.category = language;

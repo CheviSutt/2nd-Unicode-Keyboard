@@ -2,8 +2,6 @@
   <div class="container">
 
     <h1>{{ title }}</h1>
-    <!--<h4>{{ characters }}</h4>-->
-
     <div class="keyboard">
       <select @change="setLanguage(currLanguage)" v-model="currLanguage">
         <option v-for="(value, key) of categories" :value="key" :key="key">{{ value }}</option>
@@ -52,11 +50,6 @@ export default {
       characters: 'characters',
       categories: 'categories',
     }),
-    // characters() {
-    //   return this.$store.state.characters || {
-    //     mirrored: [],
-    //   };
-    // },
   },
   methods: {
     ...mapActions([

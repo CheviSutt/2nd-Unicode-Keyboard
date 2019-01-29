@@ -17,7 +17,7 @@ export default new Vuex.Store({
   mutations: {
     updateCategories(state, categories) {
       state.categories = categories;
-      state.category = 'Cc';
+      state.category = 'Nd';
       // console.log(this.state.categories);
     },
     updateKeys(state, characters) {
@@ -27,7 +27,7 @@ export default new Vuex.Store({
       for (const key in characters) {
         const character = characters[key];
         row.push(character);
-        if (row.length > 16) {
+        if (row.length > 15) {
           rows.push(row);
           row = [];
         }

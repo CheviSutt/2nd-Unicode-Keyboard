@@ -77,7 +77,7 @@ export default {
         this.symbols.unshift(key);
         localStorage.setItem('characterSelected', JSON.stringify(this.symbols));
         this.symbols = this.symbols.slice(0, 16);
-        console.log(this.symbols[0]);
+        // console.log(this.symbols[0]);
       }
       this.$emit('keySelected', key);
     },
@@ -93,7 +93,7 @@ export default {
 
   created() {
     this.getCategories().then(() => this.getCategory());
-    this.symbols = JSON.parse(localStorage.getItem('characterSelected')) || []; // clears length of null error when storage is clear
+    this.symbols = JSON.parse(localStorage.getItem('characterSelected')).slice(0, 16) || [];// clears length of null error when storage is clear
   },
 
 };

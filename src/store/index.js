@@ -10,7 +10,6 @@ export default new Vuex.Store({
     categories: null,
     category: null,
     characters: null,
-    // character: null, // not used
     languages: {},
   },
 

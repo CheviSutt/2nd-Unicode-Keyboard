@@ -19,7 +19,8 @@
       <div class="recentRow">
         <table>
           <tr>
-            <td v-for="symbol of symbols" :key="symbol[0]" :title="symbol.name">
+            <td v-for="symbol of symbols" :key="symbol[0]" :title="symbol.name"
+                v-bind:class="{ active: activeKey(symbol) }">
               <div class="keyButton">{{ symbol.symbol }}</div></td>
           </tr>
         </table>
